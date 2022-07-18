@@ -14,3 +14,12 @@ resource "aws_instance" "myfirsterraform" {
     }
   
 }
+
+# create code commit repository
+
+resource "aws_codecommit_repository" "wordpressapp" {
+  repository_name = "thechroniclecloud"
+  description = "Sample wordpress application"
+  default_branch = "dev"
+  
+}
