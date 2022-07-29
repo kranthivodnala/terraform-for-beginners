@@ -22,13 +22,6 @@ resource "aws_security_group" "security_ec2_port" {
     description = "This SG is to listen ports on 80 and 443"
 
     ingress {
-        from_port = 8080
-        to_port = 8080
-        protocol = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    ingress {
         from_port = 80
         to_port = 80
         protocol = "tcp"
