@@ -6,14 +6,25 @@ provider "aws" {
 # create ec2 instance
 
 resource "aws_instance" "my-first-ec2" {
-    ami = "ami-0cff7528ff583bf9a"
+    ami = "ami-0b5eea76982371e91"
     count = 1
-    key_name = "abcd"
+    key_name = "weather"
     instance_type = "t2.micro"
     security_groups = ["security_ec2_port"]
     tags = {
         Name = "my-first-ec2"
     }
+  user_data = <<EOF
+#!/bin/bash
+ sudo yum update -y
+sudo apt-get install -y apache2
+sudo systemctl start apache2
+sudo systemctl enable apache2
+sudo yum search docker
+sudo yum info docker
+sudo yum install docker -y
+sudo usermod -a -G docker ec2-user -y
+EOF
 }
 
 # security group with ports 80 and 443
