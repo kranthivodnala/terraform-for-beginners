@@ -16,10 +16,9 @@ resource "aws_instance" "my-first-ec2" {
     }
   user_data = <<EOF
 #!/bin/bash
- sudo yum update -y
-sudo apt-get install -y apache2
-sudo systemctl start apache2
-sudo systemctl enable apache2
+sudo yum update -y
+sudo yum install -y httpd
+sudo service httpd start
 sudo yum search docker
 sudo yum info docker
 sudo yum install docker -y
@@ -45,6 +44,14 @@ resource "aws_security_group" "security_ec2_port" {
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
+  
+    egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 tags = {
     Name = "security_ec2_port"
 }
